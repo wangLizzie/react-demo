@@ -1,7 +1,6 @@
 import './App.css';
 import LikeButton from './LikeButton';
 import CommentSection from './CommentSection';
-import { useState } from 'react';
 
 function App() {
     const sendComment = (comment) => {
@@ -11,8 +10,15 @@ function App() {
             id: Date.now(),
             text: comment,
           });
-        }, 5000);
+        }, 3000);
       });
+  }
+  const sendLike = () => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(true)
+      }, 3000)
+    })
   }
   return (
     <div className="App">
@@ -23,7 +29,7 @@ function App() {
           在用户点击按钮后，会立即显示增加的点赞数，
           同时发送请求更新服务器上的点赞数。
         </p>
-        <LikeButton initialCount={0} sendLike={() => {}} />
+        <LikeButton initialCount={0} sendLike={sendLike} />
       </section>
       <section>
         <h1>乐观更新评论</h1>
@@ -36,7 +42,7 @@ function App() {
       </section>
       <hr />
       <section>
-        <h1>使用 useDeferredValue 优化列表渲染</h1>
+        <h1>TODO: 使用 useDeferredValue 优化列表渲染</h1>
         <p>
           useDeferredValue 可以用于优化列表渲染，
           当列表数据量较大时，可以先渲染一部分数据，
