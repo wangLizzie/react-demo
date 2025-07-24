@@ -1,70 +1,95 @@
-# Getting Started with Create React App
+# React Demo 项目
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+这是一个使用 React 18 新特性 `useOptimistic` 的评论系统演示项目。
 
-## Available Scripts
+## 项目功能
 
-In the project directory, you can run:
+- 实时评论添加功能
+- 乐观更新（Optimistic Updates）
+- 错误处理和回滚机制
+- 响应式用户界面
 
-### `npm start`
+## 使用 useOptimistic 的技巧
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 1. 编写纯净的更新函数
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+更新函数应是纯函数，只根据输入状态计算输出状态，不应引入副作用或依赖外部变量。
 
-### `npm test`
+### 2. 配合 startTransition 使用
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+保证异步 UI 更新不会阻塞主线程，保持应用响应性。
 
-### `npm run build`
+### 3. 异常处理机制不可或缺
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **添加错误提示**：当操作失败时，给用户明确的反馈
+- **提供回滚或重试操作**：允许用户重新尝试失败的操作
+- **对用户体验和稳定性极为关键**：确保应用的可靠性
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 4. 处理组件卸载与竞态冲突
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **保证请求完成前组件仍然挂载**：避免在组件卸载后继续执行异步操作
+- **清理无效更新**：避免报错或内存泄露
 
-### `npm run eject`
+## 项目结构
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```
+react-demo/
+├── src/
+│   ├── App.js              # 主应用组件
+│   ├── CommentSection.jsx  # 评论区域组件
+│   ├── LikeButton.jsx      # 点赞按钮组件
+│   └── index.js            # 应用入口
+├── public/                 # 静态资源
+└── README.md              # 项目说明文档
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 技术栈
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- React 18
+- useOptimistic Hook
+- startTransition API
+- 现代 JavaScript (ES6+)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 开发指南
 
-## Learn More
+### 安装依赖
+```bash
+npm install
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 启动开发服务器
+```bash
+npm start
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 构建生产版本
+```bash
+npm run build
+```
 
-### Code Splitting
+## useOptimistic
+### 使用技巧
+- 编写纯净的更新函数
+更新函数应该是纯函数，不包含其他副作用，只根据新状态计算输出状态，不应该引入副作用或者其他依赖外部变量
+- 配合 startTransition 使用
+保证异步UI不阻塞主线程，保证应用的及时响应性
+- 异常处理机制不可或缺
+添加错误提示
+提供回滚或重试操作
+对用户体验和稳定性极为关键
+- 处理组件卸载与竞态冲突
+保证请求完成前组件未被卸载
+清理无效更新，避免报错或者内存泄露
+### 总结
+Optimistic UI 是让你的应用 “感觉顺滑” 的关键细节之一。
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+React 的 useOptimistic 提供了一个简单而强大的工具，即便网络环境不好，也能让你的界面看起来反应 “即时”。
 
-### Analyzing the Bundle Size
+下次你开发表单、点赞按钮，或者任何需要与服务器交互的功能时，试试看 useOptimistic，用户一定会爱上它。
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+在引入 useOptimistic 时，建议结合实际业务需求评估数据一致性和错误处理机制，尤其是在涉及：
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+多用户协作
+网络不稳定环境
+需要持久数据同步的功能
+通过合理设计本地状态、过渡 UI 和最终数据同步机制，可以让乐观 UI 既 “流畅” 又 “可靠”。
